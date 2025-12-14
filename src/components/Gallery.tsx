@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
+import Image from 'next/image'
 import { X } from 'lucide-react'
 
 interface GalleryImage {
@@ -110,10 +111,11 @@ export default function Gallery() {
                 className="relative group cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300"
                 onClick={() => setSelectedImage(image)}
               >
-                <img
+                <Image
                   src={image.image}
                   alt={image.title}
-                  className="w-full h-64 object-cover group-hover:scale-110 transition-transform duration-300"
+                  fill
+                  className="object-cover group-hover:scale-110 transition-transform duration-300"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-300 flex items-center justify-center">
                   <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center p-4">
@@ -145,9 +147,11 @@ export default function Gallery() {
                 )}
                 <p className="text-sm text-gray-500 capitalize">Category: {selectedImage.category}</p>
               </div>
-              <img
+              <Image
                 src={selectedImage.image}
                 alt={selectedImage.title}
+                width={800}
+                height={600}
                 className="max-w-full max-h-full object-contain rounded-lg mt-4"
               />
             </div>

@@ -62,8 +62,10 @@ export function useRealtimeUpdates() {
       // Attempt to reconnect after 5 seconds
       setTimeout(() => {
         if (eventSource.readyState === EventSource.CLOSED) {
-          // Reconnect logic would go here, but for simplicity we'll just log
-          console.log('Attempting to reconnect...')
+          // Reconnect logic would go here
+          if (process.env.NODE_ENV !== 'production') {
+            console.log('Attempting to reconnect...')
+          }
         }
       }, 5000)
     }

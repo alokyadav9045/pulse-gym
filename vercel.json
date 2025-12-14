@@ -1,0 +1,29 @@
+{
+  "buildCommand": "npm run build",
+  "devCommand": "npm run dev",
+  "installCommand": "npm install",
+  "framework": "nextjs",
+  "nodeVersion": "18.x",
+  "outputDirectory": ".next",
+  "env": {
+    "MONGODB_URI": {
+      "description": "MongoDB connection string for your database"
+    },
+    "JWT_SECRET": {
+      "description": "Secret key for JWT token signing - generate a strong random string"
+    },
+    "CLOUDINARY_CLOUD_NAME": {
+      "description": "Your Cloudinary cloud name"
+    },
+    "CLOUDINARY_API_KEY": {
+      "description": "Your Cloudinary API key"
+    },
+    "CLOUDINARY_API_SECRET": {
+      "description": "Your Cloudinary API secret"
+    },
+    "LOG_LEVEL": {
+      "description": "Logging level (info, debug, error, warn)",
+      "value": "info"
+    }
+  }
+}

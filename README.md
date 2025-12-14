@@ -5,6 +5,7 @@ A comprehensive web application for managing gym operations, built with Next.js,
 ## Features
 
 ### Landing Page
+
 - Modern, responsive design with hero section
 - About section with gym information
 - Services showcase (Personal Training, Group Classes, etc.)
@@ -14,6 +15,7 @@ A comprehensive web application for managing gym operations, built with Next.js,
 - Contact form
 
 ### Admin Panel
+
 - Secure admin login
 - Dashboard with key metrics
 - Daily check-in system with member search
@@ -33,6 +35,7 @@ A comprehensive web application for managing gym operations, built with Next.js,
 ## Getting Started
 
 ### Prerequisites
+
 - Node.js 18+
 - MongoDB (local or Atlas)
 - npm or yarn
@@ -40,18 +43,22 @@ A comprehensive web application for managing gym operations, built with Next.js,
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone <repository-url>
 cd pulse-gym-management
 ```
 
-2. Install dependencies:
+1. Install dependencies:
+
 ```bash
 npm install
 ```
 
-3. Set up environment variables:
+1. Set up environment variables:
+
 Create a `.env.local` file in the root directory:
+
 ```env
 MONGODB_URI=mongodb://localhost:27017/pulse-gym
 JWT_SECRET=your-super-secret-jwt-key-here
@@ -63,24 +70,25 @@ TWILIO_AUTH_TOKEN=your-auth-token
 TWILIO_PHONE_NUMBER=your-twilio-phone-number
 ```
 
-4. Start MongoDB service (if using local MongoDB)
+1. Start MongoDB service (if using local MongoDB)
 
-5. Run the development server:
+1. Run the development server:
+
 ```bash
 npm run dev
 ```
 
-6. Open [http://localhost:3000](http://localhost:3000) in your browser.
+1. Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ## Admin Access
 
-- **URL**: http://localhost:3000/admin/login
+- **URL**: [http://localhost:3000/admin/login](http://localhost:3000/admin/login)
 - **Username**: admin
 - **Password**: admin123
 
 ## Project Structure
 
-```
+```text
 src/
 ├── app/                    # Next.js app directory
 │   ├── admin/             # Admin panel pages
@@ -107,30 +115,36 @@ src/
 ## API Endpoints
 
 ### Authentication
+
 - `POST /api/auth/login` - Admin login
 
 ### Members
+
 - `GET /api/members` - Get all members (with optional search)
 - `POST /api/members` - Create new member
 
 ### Attendance
+
 - `GET /api/attendance` - Get attendance records
 - `POST /api/attendance` - Mark attendance
 
 ## Database Models
 
 ### Member
+
 - memberId (unique)
 - name, email, phone
 - membership details
 - personal information
 
-### Attendance
+### Attendance Record
+
 - memberId
 - date, checkInTime
 - status
 
 ### Fee
+
 - memberId
 - amount, payment details
 - receipt information
@@ -138,12 +152,14 @@ src/
 ## Deployment
 
 ### Frontend Deployment (Vercel)
+
 1. Push code to GitHub
 2. Connect repository to Vercel
 3. Set environment variables in Vercel dashboard
 4. Deploy
 
 ### Database
+
 - Use MongoDB Atlas for production
 - Update MONGODB_URI in environment variables
 
