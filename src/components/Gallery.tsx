@@ -32,6 +32,12 @@ export default function Gallery() {
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null)
   const [loading, setLoading] = useState(true)
+  const [failedImages, setFailedImages] = useState<Record<string, boolean>>({})
+
+  const handleImageError = (id: string, src: string) => {
+    console.error(`Image failed to load: ${src}`)
+    setFailedImages(prev => ({ ...prev, [id]: true }))
+  }
 
   useEffect(() => {
     fetchGalleryImages()
@@ -111,13 +117,25 @@ export default function Gallery() {
                 className="relative group cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 h-48 sm:h-56 md:h-64"
                 onClick={() => setSelectedImage(image)}
               >
-                <Image
-                  src={image.image}
-                  alt={image.title}
-                  fill
-                  sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                  className="object-cover group-hover:scale-110 transition-transform duration-300"
-                />
+                {failedImages[image._id] ? (
+                  // Fallback: use plain <img> tag to bypass Next image optimizer when it fails
+                  // This ensures images still display even if the optimizer returns 404 or fails
+                  // (e.g., remote host restrictions). Using a non-optimized tag as a last resort.
+                  <img
+                    src={image.image}
+                    alt={image.title}
+                    className="object-cover group-hover:scale-110 transition-transform duration-300 w-full h-full"
+                  />
+                ) : (
+                  <Image
+                    src={image.image}
+                    alt={image.title}
+                    fill
+                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
+                    onError={() => handleImageError(image._id, image.image)}
+                    className="object-cover group-hover:scale-110 transition-transform duration-300"
+                  />
+                )}
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-300 flex items-center justify-center">
                   <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center p-4">
                     <p className="font-semibold">{image.title}</p>
@@ -148,13 +166,22 @@ export default function Gallery() {
                 )}
                 <p className="text-sm text-gray-500 capitalize">Category: {selectedImage.category}</p>
               </div>
-              <Image
-                src={selectedImage.image}
-                alt={selectedImage.title}
-                width={800}
-                height={600}
-                className="max-w-full max-h-full object-contain rounded-lg mt-4"
-              />
+              {failedImages[selectedImage._id] ? (
+                <img
+                  src={selectedImage.image}
+                  alt={selectedImage.title}
+                  className="max-w-full max-h-full object-contain rounded-lg mt-4"
+                />
+              ) : (
+                <Image
+                  src={selectedImage.image}
+                  alt={selectedImage.title}
+                  width={800}
+                  height={600}
+                  onError={() => handleImageError(selectedImage._id, selectedImage.image)}
+                  className="max-w-full max-h-full object-contain rounded-lg mt-4"
+                />
+              )}
             </div>
           </div>
         )}
