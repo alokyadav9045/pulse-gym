@@ -60,4 +60,6 @@ export function createUnsubscribeToken(memberId: string) {
   return jwt.sign({ memberId, action: 'unsubscribe_whatsapp' }, secret, { expiresIn: '30d' })
 }
 
-export default { sendWhatsApp, sendSMS, createUnsubscribeToken }
+const notifications = { sendWhatsApp, sendSMS, createUnsubscribeToken }
+
+export default notifications

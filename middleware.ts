@@ -9,6 +9,7 @@ export function middleware(request: NextRequest) {
     '/api/attendance',
     '/api/dashboard',
     '/api/fees',
+    // gallery: allow GET publicly, but protect write actions (POST/PUT/DELETE)
     '/api/gallery',
     '/api/members',
     '/api/partners',
@@ -26,6 +27,11 @@ export function middleware(request: NextRequest) {
   // Allow login page and auth API
   if (request.nextUrl.pathname === '/admin/login' ||
       request.nextUrl.pathname === '/api/auth/login') {
+    return NextResponse.next()
+  }
+
+  // Allow public GET for gallery (listing images) but protect other methods
+  if (request.nextUrl.pathname === '/api/gallery' && request.method === 'GET') {
     return NextResponse.next()
   }
 

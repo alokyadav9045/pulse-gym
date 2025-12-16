@@ -20,6 +20,15 @@
     "CLOUDINARY_API_SECRET": {
       "description": "Your Cloudinary API secret"
     },
+    "TWILIO_ACCOUNT_SID": {
+      "description": "Optional: Twilio account SID for WhatsApp/SMS"
+    },
+    "TWILIO_AUTH_TOKEN": {
+      "description": "Optional: Twilio auth token"
+    },
+    "TWILIO_WHATSAPP_FROM": {
+      "description": "Optional: Twilio WhatsApp 'from' number (whatsapp:+...)"
+    },
     "LOG_LEVEL": {
       "description": "Logging level (info, debug, error, warn)",
       "value": "info"

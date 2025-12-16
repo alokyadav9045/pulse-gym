@@ -13,9 +13,10 @@
 
 ## Environment Variables (Required on Vercel)
 
-Set these environment variables in your Vercel project settings:
+Set these environment variables in your Vercel project settings for the relevant Environment (Preview/Production) — sensitive keys should be added to Production and marked as encrypted.
 
 ```env
+# Required
 MONGODB_URI=mongodb+srv://[username]:[password]@[cluster].mongodb.net/vitalize-fitness?retryWrites=true&w=majority
 JWT_SECRET=[generate-a-strong-32-character-random-string]
 CLOUDINARY_CLOUD_NAME=[your-cloud-name]
@@ -24,8 +25,15 @@ CLOUDINARY_API_SECRET=[your-api-secret]
 NODE_ENV=production
 LOG_LEVEL=info
 NEXT_PUBLIC_API_URL=https://your-domain.com
+NEXT_PUBLIC_BASE_URL=https://your-domain.com
+
+# Optional (for notifications)
+TWILIO_ACCOUNT_SID=[your-twilio-account-sid]
+TWILIO_AUTH_TOKEN=[your-twilio-auth-token]
+TWILIO_WHATSAPP_FROM=whatsapp:+1415...
 ```
 
+Tip: run `npm run check-env` in CI or locally prior to `npm run build` to validate required settings.
 ## Deployment Steps
 
 ### 1. Prepare Your Repository
