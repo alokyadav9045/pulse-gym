@@ -34,7 +34,7 @@ TWILIO_WHATSAPP_FROM=whatsapp:+1415...
 ```
 
 Tip: run `npm run check-env` in CI or locally prior to `npm run build` to validate required settings.
-## Deployment Steps
+## Deployment Steps (Render)
 
 ### 1. Prepare Your Repository
 
@@ -42,37 +42,64 @@ Tip: run `npm run check-env` in CI or locally prior to `npm run build` to valida
 # Ensure all changes are committed
 git status
 
-# Push to GitHub/GitLab
+# Push to GitHub
 git push origin main
 ```
 
-### 2. Create Vercel Project
+### 2. Create a Render Web Service
 
-1. Visit [https://vercel.com/new](https://vercel.com/new)
-2. Import your Git repository
-3. Configure project settings:
-   - Framework: Next.js
-   - Node Version: 18.x
-   - Build Command: `npm run build`
-   - Output Directory: `.next`
+1. Go to https://dashboard.render.com and create a new **Web Service**.
+2. Connect your GitHub repository and select branch `main`.
+3. Configure the service:
+   - Environment: **Static or Web Service** (choose Web Service for Next.js Server)
+   - Branch: `main`
+   - Build Command: `npm install; npm run build`
+   - Start Command: `npm run start`  <-- IMPORTANT (do not use `npm run dev`)
+   - Runtime: Node 18+ (Render auto-detects; set to 18.x if you need)
 
-### 3. Add Environment Variables
+> Important: In Render service settings set **NODE_ENV** to `production` under Environment -> Environment Variables. This ensures Next.js runs in production mode and CSS/PostCSS/Tailwind are processed correctly and avoids the `Module parse failed: Unexpected character '@'` error that occurs when running the dev server in a production deployment.
+### 3. Add Environment Variables (Build & Runtime)
 
-In Vercel Dashboard:
+In Render Dashboard, add these env vars (set for both **Build** and **Runtime** if your app needs DB access at build time):
 
-1. Go to Project Settings → Environment Variables
-2. Add all required variables (see above)
-3. Mark sensitive variables as encrypted
+```env
+# Required
+MONGODB_URI=mongodb+srv://[username]:[password]@[cluster].mongodb.net/vitalize-fitness?retryWrites=true&w=majority
+JWT_SECRET=[strong-32+ char string]
+CLOUDINARY_CLOUD_NAME=[your-cloud-name]
+CLOUDINARY_API_KEY=[your-api-key]
+CLOUDINARY_API_SECRET=[your-api-secret]
+NODE_ENV=production
+NEXT_PUBLIC_API_URL=https://your-domain.com
+NEXT_PUBLIC_BASE_URL=https://your-domain.com
+
+# Optional for notifications
+TWILIO_ACCOUNT_SID=[your-twilio-account-sid]
+TWILIO_AUTH_TOKEN=[your-twilio-auth-token]
+TWILIO_WHATSAPP_FROM=whatsapp:+1415...
+```
+
+> Tip: If you prefer not to provide `MONGODB_URI` at build time, ensure admin pages that access the DB are marked dynamic (server-rendered) to avoid DB calls during static generation. (This repo now marks `src/app/admin` as dynamic to avoid build-time DB calls.)
 
 ### 4. Deploy
 
-```bash
-# Option 1: Push to main branch (auto-deploys)
-git push origin main
+Push to `main` (auto-deploys) or trigger a manual deploy from Render.
 
-# Option 2: Deploy from Vercel CLI
-vercel deploy --prod
+```bash
+git push origin main
 ```
+
+---
+
+### Troubleshooting (Render)
+
+- If you see `MongooseServerSelectionError` during build: either provide `MONGODB_URI` in Build environment or mark pages that require DB as dynamic (server-rendered). We added `src/app/admin/layout.tsx` with `export const dynamic = 'force-dynamic'` to prevent admin pages from being statically exported.
+- If Render starts `npm run dev` instead of `npm run start`, update the **Start Command** in your Render service to `npm run start` (dev uses non-standard NODE_ENV and is not suitable for production).
+- To ensure `npm run check-env` validates envs at build, set `NODE_ENV=production` in build environment so the script enforces required env vars.
+
+---
+
+For detailed verification steps and post-deployment checks, see the Buyer's Guide above in this document.
 
 ## Post-Deployment Verification
 

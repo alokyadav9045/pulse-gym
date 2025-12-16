@@ -10,7 +10,7 @@
     "dev": "next dev",
     "build": "next build",
     "prebuild": "node scripts/checkEnv.js",
-    "start": "next start",
+    "start": "NODE_ENV=production next start",
     "lint": "next lint",
     "test": "jest",
     "test:watch": "jest --watch",
