@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* Logo sizing: base, sm, and md (md uses 10rem per request) */
+.logo {
+  height: 2.5rem; /* ~h-10 */
+  width: auto;
+  object-fit: contain;
+}
+
+@media (min-width: 640px) {
+  .logo { height: 3rem; /* ~h-12 */ }
+}
+
+@media (min-width: 768px) {
+  .logo { height: 10rem; /* custom, per request */ }
+}
