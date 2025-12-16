@@ -48,12 +48,16 @@ export async function POST(request: NextRequest) {
       title,
       description,
       imageUrl,
+      image,
       category,
       isActive
     } = body
 
+    // Support both `image` and legacy `imageUrl` field names
+    const imageField = image || imageUrl
+
     // Validate required fields
-    if (!title || !imageUrl || !category) {
+    if (!title || !imageField || !category) {
       return NextResponse.json(
         { success: false, message: 'Missing required fields' },
         { status: 400 }
@@ -63,7 +67,7 @@ export async function POST(request: NextRequest) {
     const galleryImage = new GalleryImage({
       title,
       description,
-      imageUrl,
+      image: imageField,
       category,
       isActive: isActive ?? true
     })
@@ -93,6 +97,7 @@ export async function PUT(request: NextRequest) {
       title,
       description,
       imageUrl,
+      image,
       category,
       isActive
     } = body
@@ -104,15 +109,18 @@ export async function PUT(request: NextRequest) {
       )
     }
 
+    const updatePayload: any = {
+      title,
+      description,
+      category,
+      isActive
+    }
+
+    if (image || imageUrl) updatePayload.image = image || imageUrl
+
     const updatedGalleryImage = await GalleryImage.findByIdAndUpdate(
       id,
-      {
-        title,
-        description,
-        imageUrl,
-        category,
-        isActive
-      },
+      updatePayload,
       { new: true, runValidators: true }
     )
 
