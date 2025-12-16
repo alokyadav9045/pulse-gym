@@ -61,25 +61,24 @@ const trainers = [
 
 export default function Trainers() {
   return (
-    <section id="trainers" className="py-20 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="trainers" className="py-16 xs:py-20 sm:py-24 md:py-28 lg:py-32 bg-white">
+      <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 md:px-8 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          className="text-center mb-10 sm:mb-12 md:mb-16">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
             Meet Our <span className="text-primary">Trainers</span>
           </h2>
-          <div className="w-20 h-1 bg-primary rounded-full mx-auto mb-6"></div>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <div className="w-20 h-1 bg-primary rounded-full mx-auto mb-4 sm:mb-6"></div>
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
             Our certified trainers are dedicated to helping you achieve your fitness goals with personalized guidance and motivation.
           </p>
         </motion.div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
           {trainers.map((trainer, index) => (
             <motion.div
               key={trainer.id}
@@ -113,10 +112,10 @@ export default function Trainers() {
               </div>
 
               <div className="p-6">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{trainer.name}</h3>
-                <p className="text-primary font-semibold mb-1">{trainer.specialty}</p>
-                <p className="text-gray-600 text-sm mb-3">{trainer.experience} experience</p>
-                <p className="text-gray-600 text-sm leading-relaxed">{trainer.bio}</p>
+                <h3 className="text-lg sm:text-xl font-bold text-gray-900 mb-2">{trainer.name}</h3>
+                <p className="text-primary text-sm sm:text-base font-semibold mb-1">{trainer.specialty}</p>
+                <p className="text-gray-600 text-xs sm:text-sm mb-3">{trainer.experience} experience</p>
+                <p className="text-gray-600 text-xs sm:text-sm leading-relaxed">{trainer.bio}</p>
               </div>
             </motion.div>
           ))}
@@ -127,9 +126,8 @@ export default function Trainers() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.5 }}
           viewport={{ once: true }}
-          className="text-center mt-12"
-        >
-          <button className="bg-primary hover:bg-primary-dark text-white px-8 py-3 rounded-lg font-semibold transition-colors">
+          className="text-center mt-10 sm:mt-12">
+          <button className="bg-primary hover:bg-primary-dark text-white px-6 sm:px-8 py-2.5 sm:py-3 rounded-lg font-semibold transition-colors text-sm sm:text-base">
             Book a Session
           </button>
         </motion.div>

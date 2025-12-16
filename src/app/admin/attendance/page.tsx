@@ -150,49 +150,49 @@ export default function Attendance() {
 
   return (
     <AdminLayout>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Attendance Management</h1>
-              <p className="text-gray-600 mt-2">Mark daily attendance for gym members</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Attendance Management</h1>
+              <p className="text-xs sm:text-sm text-gray-600 mt-1 sm:mt-2">Mark daily attendance for gym members</p>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="flex flex-col xs:flex-row xs:items-center gap-3 xs:space-x-4">
               <div className="flex items-center space-x-2">
                 <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-500' : 'bg-red-500'}`}></div>
-                <span className="text-sm text-gray-600">
+                <span className="text-xs sm:text-sm text-gray-600">
                   {isConnected ? 'Real-time' : 'Offline'}
                 </span>
               </div>
-              <div className="text-right">
-                <p className="text-sm text-gray-600">Present: {presentCount}</p>
-                <p className="text-sm text-gray-600">Late: {lateCount}</p>
-                <p className="text-sm text-gray-600">Absent: {absentCount}</p>
-                <p className="text-sm font-medium text-primary">Rate: {attendanceRate}%</p>
+              <div className="text-left xs:text-right">
+                <p className="text-xs sm:text-sm text-gray-600">Present: {presentCount}</p>
+                <p className="text-xs sm:text-sm text-gray-600">Late: {lateCount}</p>
+                <p className="text-xs sm:text-sm text-gray-600">Absent: {absentCount}</p>
+                <p className="text-xs sm:text-sm font-medium text-primary">Rate: {attendanceRate}%</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* Date Selector */}
-        <div className="bg-white rounded-lg shadow p-6 mb-6">
-          <div className="flex items-center space-x-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Select Date</label>
+        <div className="bg-white rounded-lg shadow p-4 sm:p-6 mb-4 sm:mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-4">
+            <div className="flex-1">
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Select Date</label>
               <input
                 type="date"
                 value={selectedDate}
                 onChange={(e) => setSelectedDate(e.target.value)}
-                className="px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-3 py-2 text-xs sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               />
             </div>
-            <div className="flex items-center text-gray-600">
-              <Calendar className="w-5 h-5 mr-2" />
-              <span>{new Date(selectedDate).toLocaleDateString('en-IN', {
-                weekday: 'long',
+            <div className="flex items-center text-gray-600 text-xs sm:text-sm mt-2 sm:mt-0">
+              <Calendar className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
+              <span className="truncate">{new Date(selectedDate).toLocaleDateString('en-IN', {
+                weekday: 'short',
                 year: 'numeric',
-                month: 'long',
+                month: 'short',
                 day: 'numeric'
               })}</span>
             </div>
@@ -200,27 +200,27 @@ export default function Attendance() {
         </div>
 
         {/* Search */}
-        <div className="bg-white rounded-lg shadow p-6 mb-6">
+        <div className="bg-white rounded-lg shadow p-4 sm:p-6 mb-4 sm:mb-6">
           <div className="relative">
-            <Search className="absolute left-3 top-3 h-5 w-5 text-gray-400" />
+            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 sm:h-5 w-4 sm:w-5 text-gray-400" />
             <input
               type="text"
-              placeholder="Search members by name or ID..."
+              placeholder="Search members..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+              className="w-full pl-10 pr-4 py-2 sm:py-3 text-xs sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
             />
           </div>
         </div>
 
         {/* Members List */}
         <div className="bg-white rounded-lg shadow overflow-hidden">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">Mark Attendance</h3>
-            <p className="text-sm text-gray-600">Click Present/Absent buttons to mark attendance</p>
+          <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
+            <h3 className="text-base sm:text-lg font-medium text-gray-900">Mark Attendance</h3>
+            <p className="text-xs sm:text-sm text-gray-600 mt-1">Click Present/Absent buttons to mark attendance</p>
           </div>
 
-          <div className="divide-y divide-gray-200">
+          <div className="divide-y divide-gray-200 overflow-x-auto">
             {filteredMembers.map((member) => {
               const record = attendanceRecords.find(r => r.memberId.memberId === member.memberId)
               const status = record ? record.status : null
@@ -230,78 +230,82 @@ export default function Attendance() {
               }) : null
 
               return (
-                <div key={member._id} className="px-6 py-4 flex items-center justify-between hover:bg-gray-50">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0 h-10 w-10">
-                      <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white font-semibold">
+                <div key={member._id} className="px-4 sm:px-6 py-3 sm:py-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 hover:bg-gray-50">
+                  <div className="flex items-center min-w-0 flex-1">
+                    <div className="flex-shrink-0 h-8 sm:h-10 w-8 sm:w-10">
+                      <div className="h-full w-full rounded-full bg-primary flex items-center justify-center text-white font-semibold text-xs sm:text-sm">
                         {member.name.split(' ').map(n => n[0]).join('')}
                       </div>
                     </div>
-                    <div className="ml-4">
-                      <div className="text-sm font-medium text-gray-900">{member.name}</div>
-                      <div className="text-sm text-gray-500">ID: {member.memberId} | {member.membershipType}</div>
+                    <div className="ml-2 sm:ml-4 min-w-0 flex-1">
+                      <div className="text-xs sm:text-sm font-medium text-gray-900 truncate">{member.name}</div>
+                      <div className="text-xs text-gray-500 truncate">ID: {member.memberId}</div>
+                      <div className="text-xs text-gray-500 hidden sm:block">{member.membershipType}</div>
                       {checkInTime && (
-                        <div className="text-xs text-gray-400">Checked in at {checkInTime}</div>
+                        <div className="text-xs text-gray-400">@{checkInTime}</div>
                       )}
                     </div>
                   </div>
 
-                  <div className="flex items-center space-x-3">
+                  <div className="flex items-center justify-between sm:justify-end gap-2 sm:gap-3">
                     {status === 'Present' && (
-                      <div className="flex items-center text-green-600">
-                        <CheckCircle className="w-5 h-5 mr-1" />
-                        <span className="text-sm font-medium">Present</span>
+                      <div className="flex items-center text-green-600 text-xs sm:text-sm">
+                        <CheckCircle className="w-3 sm:w-5 h-3 sm:h-5 mr-1" />
+                        <span className="hidden sm:inline font-medium">Present</span>
                       </div>
                     )}
                     {status === 'Late' && (
-                      <div className="flex items-center text-yellow-600">
-                        <Clock className="w-5 h-5 mr-1" />
-                        <span className="text-sm font-medium">Late</span>
+                      <div className="flex items-center text-yellow-600 text-xs sm:text-sm">
+                        <Clock className="w-3 sm:w-5 h-3 sm:h-5 mr-1" />
+                        <span className="hidden sm:inline font-medium">Late</span>
                       </div>
                     )}
                     {status === 'Absent' && (
-                      <div className="flex items-center text-red-600">
-                        <XCircle className="w-5 h-5 mr-1" />
-                        <span className="text-sm font-medium">Absent</span>
+                      <div className="flex items-center text-red-600 text-xs sm:text-sm">
+                        <XCircle className="w-3 sm:w-5 h-3 sm:h-5 mr-1" />
+                        <span className="hidden sm:inline font-medium">Absent</span>
                       </div>
                     )}
                     {status === null && (
-                      <div className="flex items-center text-gray-400">
-                        <Clock className="w-5 h-5 mr-1" />
-                        <span className="text-sm">Not Marked</span>
+                      <div className="flex items-center text-gray-400 text-xs sm:text-sm">
+                        <Clock className="w-3 sm:w-5 h-3 sm:h-5 mr-1" />
+                        <span className="hidden sm:inline">Not Marked</span>
                       </div>
                     )}
 
-                    <div className="flex space-x-2">
+                    <div className="flex gap-1 sm:gap-2 flex-wrap justify-end sm:justify-start">
                       <button
                         onClick={() => markAttendance(member, 'Present')}
-                        className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                        className={`px-2 sm:px-3 py-1 rounded text-xs sm:text-sm font-medium transition-colors ${
                           status === 'Present'
                             ? 'bg-green-100 text-green-800 border-2 border-green-300'
                             : 'bg-gray-100 text-gray-700 hover:bg-green-100 hover:text-green-800'
                         }`}
                       >
-                        Present
+                        <span className="sm:hidden">P</span>
+                        <span className="hidden sm:inline">Present</span>
                       </button>
                       <button
                         onClick={() => markAttendance(member, 'Late')}
-                        className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                        className={`px-2 sm:px-3 py-1 rounded text-xs sm:text-sm font-medium transition-colors ${
                           status === 'Late'
                             ? 'bg-yellow-100 text-yellow-800 border-2 border-yellow-300'
                             : 'bg-gray-100 text-gray-700 hover:bg-yellow-100 hover:text-yellow-800'
                         }`}
                       >
-                        Late
+                        <span className="sm:hidden">L</span>
+                        <span className="hidden sm:inline">Late</span>
                       </button>
                       <button
                         onClick={() => markAttendance(member, 'Absent')}
-                        className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                        className={`px-2 sm:px-3 py-1 rounded text-xs sm:text-sm font-medium transition-colors ${
                           status === 'Absent'
                             ? 'bg-red-100 text-red-800 border-2 border-red-300'
                             : 'bg-gray-100 text-gray-700 hover:bg-red-100 hover:text-red-800'
                         }`}
                       >
-                        Absent
+                        <span className="sm:hidden">A</span>
+                        <span className="hidden sm:inline">Absent</span>
                       </button>
                     </div>
                   </div>
@@ -322,51 +326,51 @@ export default function Attendance() {
         </div>
 
         {/* Summary */}
-        <div className="mt-6 grid grid-cols-1 md:grid-cols-4 gap-6">
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <div className="p-3 bg-green-100 rounded-full">
-                <CheckCircle className="w-6 h-6 text-green-600" />
+        <div className="mt-6 grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-6">
+          <div className="bg-white rounded-lg shadow p-3 sm:p-6">
+            <div className="flex items-center flex-col sm:flex-row">
+              <div className="p-2 sm:p-3 bg-green-100 rounded-full">
+                <CheckCircle className="w-4 sm:w-6 h-4 sm:h-6 text-green-600" />
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Present Today</p>
-                <p className="text-2xl font-bold text-gray-900">{presentCount}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <div className="p-3 bg-yellow-100 rounded-full">
-                <Clock className="w-6 h-6 text-yellow-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Late Today</p>
-                <p className="text-2xl font-bold text-gray-900">{lateCount}</p>
+              <div className="mt-2 sm:mt-0 sm:ml-4 text-center sm:text-left">
+                <p className="text-xs sm:text-sm font-medium text-gray-600">Present Today</p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900">{presentCount}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <div className="p-3 bg-red-100 rounded-full">
-                <XCircle className="w-6 h-6 text-red-600" />
+          <div className="bg-white rounded-lg shadow p-3 sm:p-6">
+            <div className="flex items-center flex-col sm:flex-row">
+              <div className="p-2 sm:p-3 bg-yellow-100 rounded-full">
+                <Clock className="w-4 sm:w-6 h-4 sm:h-6 text-yellow-600" />
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Absent Today</p>
-                <p className="text-2xl font-bold text-gray-900">{absentCount}</p>
+              <div className="mt-2 sm:mt-0 sm:ml-4 text-center sm:text-left">
+                <p className="text-xs sm:text-sm font-medium text-gray-600">Late Today</p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900">{lateCount}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <div className="p-3 bg-blue-100 rounded-full">
-                <TrendingUp className="w-6 h-6 text-blue-600" />
+          <div className="bg-white rounded-lg shadow p-3 sm:p-6">
+            <div className="flex items-center flex-col sm:flex-row">
+              <div className="p-2 sm:p-3 bg-red-100 rounded-full">
+                <XCircle className="w-4 sm:w-6 h-4 sm:h-6 text-red-600" />
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Attendance Rate</p>
-                <p className="text-2xl font-bold text-gray-900">{attendanceRate}%</p>
+              <div className="mt-2 sm:mt-0 sm:ml-4 text-center sm:text-left">
+                <p className="text-xs sm:text-sm font-medium text-gray-600">Absent Today</p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900">{absentCount}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow p-3 sm:p-6 col-span-2 sm:col-span-1">
+            <div className="flex items-center flex-col sm:flex-row">
+              <div className="p-2 sm:p-3 bg-blue-100 rounded-full">
+                <TrendingUp className="w-4 sm:w-6 h-4 sm:h-6 text-blue-600" />
+              </div>
+              <div className="mt-2 sm:mt-0 sm:ml-4 text-center sm:text-left">
+                <p className="text-xs sm:text-sm font-medium text-gray-600">Attendance Rate</p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900">{attendanceRate}%</p>
               </div>
             </div>
           </div>

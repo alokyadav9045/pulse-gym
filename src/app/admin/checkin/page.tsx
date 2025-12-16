@@ -156,29 +156,33 @@ export default function CheckIn() {
 
   return (
     <AdminLayout>
-      <div className="p-6">
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-4">
-            <h1 className="text-3xl font-bold text-gray-900">Daily Check-in</h1>
-            <div className="flex items-center space-x-2">
+      <div className="p-3 sm:p-6">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-4">
+            <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Daily Check-in</h1>
+            <div className="flex items-center gap-2">
               {isConnected ? (
                 <>
-                  <Wifi className="w-5 h-5 text-green-500" />
-                  <span className="text-sm text-green-600 font-medium">Live</span>
+                  <Wifi className="w-4 sm:w-5 h-4 sm:h-5 text-green-500" />
+                  <span className="text-xs sm:text-sm text-green-600 font-medium">Live</span>
                 </>
               ) : (
                 <>
-                  <WifiOff className="w-5 h-5 text-red-500" />
-                  <span className="text-sm text-red-600 font-medium">Offline</span>
+                  <WifiOff className="w-4 sm:w-5 h-4 sm:h-5 text-red-500" />
+                  <span className="text-xs sm:text-sm text-red-600 font-medium">Offline</span>
                 </>
               )}
             </div>
           </div>
-          <div className="flex items-center text-gray-600">
-            <Calendar className="w-5 h-5 mr-2" />
-            <span className="mr-4">{currentDate}</span>
-            <Clock className="w-5 h-5 mr-2" />
-            <span>{currentTime}</span>
+          <div className="flex flex-col xs:flex-row xs:items-center gap-2 xs:gap-4 text-xs sm:text-sm text-gray-600">
+            <div className="flex items-center">
+              <Calendar className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
+              <span>{currentDate}</span>
+            </div>
+            <div className="flex items-center">
+              <Clock className="w-4 sm:w-5 h-4 sm:h-5 mr-2" />
+              <span>{currentTime}</span>
+            </div>
           </div>
         </div>
 

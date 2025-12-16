@@ -136,33 +136,33 @@ export default function AdminDashboard() {
     <AdminLayout>
       <div className="max-w-7xl mx-auto">
         {/* Connection Status */}
-        <div className="mb-6 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
+        <div className="mb-4 sm:mb-6 flex items-center justify-between px-0 sm:px-0">
+          <div className="flex items-center space-x-2 text-xs sm:text-sm">
             {isConnected ? (
               <>
-                <Wifi className="w-5 h-5 text-green-500" />
-                <span className="text-sm text-green-600 font-medium">Live Updates Active</span>
+                <Wifi className="w-4 sm:w-5 h-4 sm:h-5 text-green-500 flex-shrink-0" />
+                <span className="text-green-600 font-medium">Live Updates Active</span>
               </>
             ) : (
               <>
-                <WifiOff className="w-5 h-5 text-red-500" />
-                <span className="text-sm text-red-600 font-medium">Connecting...</span>
+                <WifiOff className="w-4 sm:w-5 h-4 sm:h-5 text-red-500 flex-shrink-0" />
+                <span className="text-red-600 font-medium">Connecting...</span>
               </>
             )}
           </div>
         </div>
 
         {/* Stats Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-6 mb-6">
+        <div className="grid grid-cols-1 xs:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-6 mb-4 sm:mb-6">
           {statCards.map((stat) => (
-            <div key={stat.name} className="bg-white rounded-lg shadow p-6">
-              <div className="flex items-center">
-                <div className={`p-3 rounded-full ${stat.color}`}>
-                  <stat.icon className="w-6 h-6 text-white" />
+            <div key={stat.name} className="bg-white rounded-lg shadow p-4 sm:p-6">
+              <div className="flex items-center gap-3 sm:gap-4">
+                <div className={`p-2 sm:p-3 rounded-full ${stat.color} flex-shrink-0`}>
+                  <stat.icon className="w-5 sm:w-6 h-5 sm:h-6 text-white" />
                 </div>
-                <div className="ml-4">
-                  <p className="text-sm font-medium text-gray-600">{stat.name}</p>
-                  <p className="text-2xl font-semibold text-gray-900">{stat.value}</p>
+                <div className="min-w-0">
+                  <p className="text-xs sm:text-sm font-medium text-gray-600">{stat.name}</p>
+                  <p className="text-lg sm:text-2xl font-semibold text-gray-900 truncate">{stat.value}</p>
                 </div>
               </div>
             </div>
@@ -171,23 +171,23 @@ export default function AdminDashboard() {
 
         {/* Recent Activity */}
         <div className="bg-white rounded-lg shadow">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="text-lg font-medium text-gray-900">Recent Check-ins</h3>
+          <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-gray-200">
+            <h3 className="text-base sm:text-lg font-medium text-gray-900">Recent Check-ins</h3>
           </div>
-          <div className="p-6">
-            <div className="space-y-4">
+          <div className="p-4 sm:p-6">
+            <div className="space-y-3 sm:space-y-4">
               {recentCheckins.map((checkin, index) => (
-                <div key={index} className="flex items-center justify-between py-3 border-b border-gray-100 last:border-b-0">
-                  <div className="flex items-center">
-                    <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-semibold">
+                <div key={index} className="flex items-center justify-between py-2 sm:py-3 border-b border-gray-100 last:border-b-0 gap-2">
+                  <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+                    <div className="w-8 sm:w-10 h-8 sm:h-10 bg-primary rounded-full flex items-center justify-center text-white font-semibold text-xs sm:text-sm flex-shrink-0">
                       {checkin.name.split(' ').map(n => n[0]).join('')}
                     </div>
-                    <div className="ml-4">
-                      <p className="text-sm font-medium text-gray-900">{checkin.name}</p>
-                      <p className="text-sm text-gray-500">{checkin.membership}</p>
+                    <div className="min-w-0">
+                      <p className="text-xs sm:text-sm font-medium text-gray-900 truncate">{checkin.name}</p>
+                      <p className="text-xs sm:text-sm text-gray-500 truncate">{checkin.membership}</p>
                     </div>
                   </div>
-                  <div className="text-sm text-gray-500">{checkin.time}</div>
+                  <div className="text-xs sm:text-sm text-gray-500 flex-shrink-0 whitespace-nowrap">{checkin.time}</div>
                 </div>
               ))}
             </div>

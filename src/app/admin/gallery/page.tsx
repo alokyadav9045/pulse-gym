@@ -231,20 +231,20 @@ export default function Gallery() {
 
   return (
     <AdminLayout>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Gallery Management</h1>
-              <p className="text-gray-600 mt-2">Manage images displayed in the website gallery</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Gallery Management</h1>
+              <p className="text-xs sm:text-sm text-gray-600 mt-1 sm:mt-2">Manage images displayed in the website gallery</p>
             </div>
             <button
               onClick={() => setShowAddModal(true)}
-              className="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2"
+              className="bg-primary hover:bg-primary-dark text-white px-3 sm:px-4 py-2 rounded-lg font-medium flex items-center gap-2 whitespace-nowrap text-sm"
             >
-              <Plus className="w-5 h-5" />
-              Add Image
+              <Plus className="w-4 sm:w-5 h-4 sm:h-5" />
+              <span>Add Image</span>
             </button>
           </div>
         </div>

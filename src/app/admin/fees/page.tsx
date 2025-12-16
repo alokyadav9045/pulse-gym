@@ -196,58 +196,58 @@ export default function Fees() {
 
   return (
     <AdminLayout>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Fee Management</h1>
-              <p className="text-gray-600 mt-2">Track payments and manage fee collection</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Fee Management</h1>
+              <p className="text-xs sm:text-sm text-gray-600 mt-1 sm:mt-2">Track payments and manage fee collection</p>
             </div>
             <button
               onClick={() => setShowAddModal(true)}
-              className="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2"
+              className="bg-primary hover:bg-primary-dark text-white px-3 sm:px-4 py-2 rounded-lg font-medium flex items-center gap-2 whitespace-nowrap text-sm sm:text-base"
             >
-              <Plus className="w-5 h-5" />
-              Collect Fee
+              <Plus className="w-4 sm:w-5 h-4 sm:h-5" />
+              <span>Collect Fee</span>
             </button>
           </div>
         </div>
 
         {/* Revenue Summary */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <div className="p-3 bg-green-100 rounded-full">
-                <DollarSign className="w-6 h-6 text-green-600" />
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-6 mb-4 sm:mb-6">
+          <div className="bg-white rounded-lg shadow p-3 sm:p-6">
+            <div className="flex items-center flex-col sm:flex-row">
+              <div className="p-2 sm:p-3 bg-green-100 rounded-full">
+                <DollarSign className="w-5 sm:w-6 h-5 sm:h-6 text-green-600" />
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Revenue</p>
-                <p className="text-2xl font-bold text-gray-900">₹{totalRevenue.toLocaleString()}</p>
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <div className="p-3 bg-blue-100 rounded-full">
-                <Receipt className="w-6 h-6 text-blue-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">Total Transactions</p>
-                <p className="text-2xl font-bold text-gray-900">{filteredFees.length}</p>
+              <div className="mt-2 sm:mt-0 sm:ml-4 text-center sm:text-left">
+                <p className="text-xs sm:text-sm font-medium text-gray-600">Total Revenue</p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900 truncate">₹{totalRevenue.toLocaleString()}</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-lg shadow p-6">
-            <div className="flex items-center">
-              <div className="p-3 bg-yellow-100 rounded-full">
-                <Calendar className="w-6 h-6 text-yellow-600" />
+          <div className="bg-white rounded-lg shadow p-3 sm:p-6">
+            <div className="flex items-center flex-col sm:flex-row">
+              <div className="p-2 sm:p-3 bg-blue-100 rounded-full">
+                <Receipt className="w-5 sm:w-6 h-5 sm:h-6 text-blue-600" />
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-600">This Month</p>
-                <p className="text-2xl font-bold text-gray-900">
+              <div className="mt-2 sm:mt-0 sm:ml-4 text-center sm:text-left">
+                <p className="text-xs sm:text-sm font-medium text-gray-600">Total Transactions</p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900">{filteredFees.length}</p>
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow p-3 sm:p-6 sm:col-span-2 lg:col-span-1">
+            <div className="flex items-center flex-col sm:flex-row">
+              <div className="p-2 sm:p-3 bg-yellow-100 rounded-full">
+                <Calendar className="w-5 sm:w-6 h-5 sm:h-6 text-yellow-600" />
+              </div>
+              <div className="mt-2 sm:mt-0 sm:ml-4 text-center sm:text-left">
+                <p className="text-xs sm:text-sm font-medium text-gray-600">This Month</p>
+                <p className="text-lg sm:text-2xl font-bold text-gray-900 truncate">
                   ₹{filteredFees
                     .filter(fee => fee.month === new Date().getMonth() + 1)
                     .reduce((sum, fee) => sum + fee.amount, 0)
@@ -259,28 +259,28 @@ export default function Fees() {
         </div>
 
         {/* Filters and Search */}
-        <div className="bg-white rounded-lg shadow p-6 mb-6">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+        <div className="bg-white rounded-lg shadow p-4 sm:p-6 mb-4 sm:mb-6">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3 sm:gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Search</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Search</label>
               <div className="relative">
-                <Search className="absolute left-3 top-3 h-4 w-4 text-gray-400" />
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-gray-400" />
                 <input
                   type="text"
                   placeholder="Search fees..."
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                  className="w-full pl-10 pr-4 py-2 text-xs sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                 />
               </div>
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Status</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Status</label>
               <select
                 value={statusFilter}
                 onChange={(e) => setStatusFilter(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-3 py-2 text-xs sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               >
                 <option value="all">All Status</option>
                 <option value="paid">Paid</option>
@@ -290,11 +290,11 @@ export default function Fees() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Month</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Month</label>
               <select
                 value={monthFilter}
                 onChange={(e) => setMonthFilter(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-3 py-2 text-xs sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               >
                 <option value="all">All Months</option>
                 {months.map(month => (
@@ -304,11 +304,11 @@ export default function Fees() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-700 mb-2">Year</label>
+              <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">Year</label>
               <select
                 value={yearFilter}
                 onChange={(e) => setYearFilter(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
+                className="w-full px-3 py-2 text-xs sm:text-sm border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
               >
                 <option value="all">All Years</option>
                 <option value="2024">2024</option>
@@ -318,9 +318,10 @@ export default function Fees() {
             </div>
 
             <div className="flex items-end">
-              <button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg font-medium flex items-center justify-center gap-2">
+              <button className="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 px-3 sm:px-4 py-2 rounded-lg font-medium flex items-center justify-center gap-2 text-xs sm:text-sm">
                 <Download className="w-4 h-4" />
-                Export
+                <span className="hidden sm:inline">Export</span>
+                <span className="sm:hidden">Export</span>
               </button>
             </div>
           </div>
@@ -332,22 +333,22 @@ export default function Fees() {
             <table className="min-w-full divide-y divide-gray-200">
               <thead className="bg-gray-50">
                 <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Member
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
                     Amount
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden lg:table-cell">
                     Payment
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden md:table-cell">
                     Period
                   </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Status
                   </th>
-                  <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  <th className="px-3 sm:px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
@@ -355,54 +356,54 @@ export default function Fees() {
               <tbody className="bg-white divide-y divide-gray-200">
                 {filteredFees.map((fee) => (
                   <tr key={fee._id} className="hover:bg-gray-50">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="flex items-center">
-                        <div className="flex-shrink-0 h-10 w-10">
-                          <div className="h-10 w-10 rounded-full bg-primary flex items-center justify-center text-white font-semibold">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
+                      <div className="flex items-center min-w-0">
+                        <div className="flex-shrink-0 h-8 sm:h-10 w-8 sm:w-10">
+                          <div className="h-full w-full rounded-full bg-primary flex items-center justify-center text-white font-semibold text-xs sm:text-sm">
                             {fee.memberId && fee.memberId.name ? fee.memberId.name.split(' ').map(n => n[0]).join('') : 'N/A'}
                           </div>
                         </div>
-                        <div className="ml-4">
-                          <div className="text-sm font-medium text-gray-900">
+                        <div className="ml-2 sm:ml-4 min-w-0 flex-1">
+                          <div className="text-xs sm:text-sm font-medium text-gray-900 truncate">
                             {fee.memberId && fee.memberId.name ? fee.memberId.name : 'Unknown Member'}
                           </div>
-                          <div className="text-sm text-gray-500">
+                          <div className="text-xs text-gray-500 truncate">
                             ID: {fee.memberId ? fee.memberId.memberId : 'N/A'}
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-medium text-gray-900">₹{fee.amount.toLocaleString()}</div>
-                      <div className="text-sm text-gray-500">{fee.receiptNumber}</div>
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap hidden sm:table-cell">
+                      <div className="text-xs sm:text-sm font-medium text-gray-900">₹{fee.amount.toLocaleString()}</div>
+                      <div className="text-xs text-gray-500">{fee.receiptNumber}</div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap hidden lg:table-cell">
                       <div className="flex items-center">
                         <div className="text-gray-400 mr-2">
                           {getPaymentModeIcon(fee.paymentMode)}
                         </div>
                         <div>
-                          <div className="text-sm font-medium text-gray-900">{fee.paymentMode}</div>
-                          <div className="text-sm text-gray-500">
+                          <div className="text-xs sm:text-sm font-medium text-gray-900">{fee.paymentMode}</div>
+                          <div className="text-xs text-gray-500">
                             {new Date(fee.paymentDate).toLocaleDateString()}
                           </div>
                         </div>
                       </div>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap hidden md:table-cell text-xs sm:text-sm text-gray-500">
                       {months.find(m => m.value === fee.month.toString())?.label} {fee.year}
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap">
                       <span className="inline-flex px-2 py-1 text-xs font-semibold rounded-full bg-green-100 text-green-800">
                         Paid
                       </span>
                     </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                      <div className="flex justify-end space-x-2">
-                        <button className="text-primary hover:text-primary-dark">
+                    <td className="px-3 sm:px-6 py-3 sm:py-4 whitespace-nowrap text-right text-sm font-medium">
+                      <div className="flex justify-end gap-2">
+                        <button className="text-primary hover:text-primary-dark p-1">
                           <Eye className="w-4 h-4" />
                         </button>
-                        <button className="text-blue-600 hover:text-blue-900">
+                        <button className="text-blue-600 hover:text-blue-900 p-1">
                           <Edit className="w-4 h-4" />
                         </button>
                       </div>
@@ -414,10 +415,10 @@ export default function Fees() {
           </div>
 
           {filteredFees.length === 0 && (
-            <div className="text-center py-12">
+            <div className="text-center py-12 px-4">
               <Receipt className="mx-auto h-12 w-12 text-gray-400" />
               <h3 className="mt-2 text-sm font-medium text-gray-900">No fees found</h3>
-              <p className="mt-1 text-sm text-gray-500">
+              <p className="mt-1 text-xs sm:text-sm text-gray-500">
                 {searchQuery || statusFilter !== 'all' || monthFilter !== 'all' || yearFilter !== 'all'
                   ? 'Try adjusting your search or filters.'
                   : 'Start collecting fees from your members.'}
@@ -428,10 +429,10 @@ export default function Fees() {
 
         {/* Collect Fee Modal */}
         {showAddModal && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-            <div className="bg-white rounded-lg p-6 w-full max-w-md mx-4">
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+            <div className="bg-white rounded-lg p-4 sm:p-6 w-full max-w-md">
               <div className="flex justify-between items-center mb-4">
-                <h2 className="text-xl font-bold text-gray-900">Collect Fee</h2>
+                <h2 className="text-lg sm:text-xl font-bold text-gray-900">Collect Fee</h2>
                 <button
                   onClick={() => setShowAddModal(false)}
                   className="text-gray-400 hover:text-gray-600"
@@ -442,13 +443,13 @@ export default function Fees() {
 
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                     Select Member
                   </label>
                   <select
                     value={formData.memberId}
                     onChange={(e) => setFormData({ ...formData, memberId: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="w-full px-3 py-2 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     required
                   >
                     <option value="">Choose a member...</option>
@@ -461,14 +462,14 @@ export default function Fees() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                     Amount (₹)
                   </label>
                   <input
                     type="number"
                     value={formData.amount}
                     onChange={(e) => setFormData({ ...formData, amount: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="w-full px-3 py-2 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     placeholder="Enter amount"
                     min="0"
                     step="0.01"
@@ -477,13 +478,13 @@ export default function Fees() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                     Payment Mode
                   </label>
                   <select
                     value={formData.paymentMode}
                     onChange={(e) => setFormData({ ...formData, paymentMode: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="w-full px-3 py-2 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                   >
                     <option value="Cash">Cash</option>
                     <option value="Card">Card</option>
@@ -494,13 +495,13 @@ export default function Fees() {
 
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                       Month
                     </label>
                     <select
                       value={formData.month}
                       onChange={(e) => setFormData({ ...formData, month: parseInt(e.target.value) })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                      className="w-full px-3 py-2 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     >
                       {months.map((month) => (
                         <option key={month.value} value={month.value}>
@@ -511,14 +512,14 @@ export default function Fees() {
                   </div>
 
                   <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-1">
+                    <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                       Year
                     </label>
                     <input
                       type="number"
                       value={formData.year}
                       onChange={(e) => setFormData({ ...formData, year: parseInt(e.target.value) })}
-                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                      className="w-full px-3 py-2 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                       min="2020"
                       max="2030"
                     />
@@ -526,30 +527,30 @@ export default function Fees() {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">
+                  <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-1">
                     Notes (Optional)
                   </label>
                   <textarea
                     value={formData.notes}
                     onChange={(e) => setFormData({ ...formData, notes: e.target.value })}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                    className="w-full px-3 py-2 text-xs sm:text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
                     rows={3}
                     placeholder="Additional notes..."
                   />
                 </div>
 
-                <div className="flex justify-end space-x-3 pt-4">
+                <div className="flex justify-end gap-3 pt-4">
                   <button
                     type="button"
                     onClick={() => setShowAddModal(false)}
-                    className="px-4 py-2 text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50"
+                    className="px-3 sm:px-4 py-2 text-xs sm:text-sm text-gray-600 border border-gray-300 rounded-md hover:bg-gray-50"
                   >
                     Cancel
                   </button>
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="px-4 py-2 bg-primary hover:bg-primary-dark text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="px-3 sm:px-4 py-2 text-xs sm:text-sm bg-primary hover:bg-primary-dark text-white rounded-md disabled:opacity-50 disabled:cursor-not-allowed"
                   >
                     {isSubmitting ? 'Collecting...' : 'Collect Fee'}
                   </button>

@@ -16,3 +16,47 @@
 @media (min-width: 768px) {
   .logo { height: 10rem; /* custom, per request */ }
 }
+
+/* Responsive mobile-first utilities */
+@layer components {
+  /* Touch-friendly buttons and interactive elements */
+  .btn-mobile {
+    @apply min-h-[44px] min-w-[44px];
+  }
+
+  /* Improved readability on mobile */
+  body {
+    @apply text-base;
+  }
+
+  /* Better spacing on mobile */
+  @screen sm {
+    body {
+      @apply text-base;
+    }
+  }
+
+  /* Ensure proper scrolling behavior */
+  html {
+    @apply scroll-smooth;
+  }
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

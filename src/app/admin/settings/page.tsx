@@ -161,13 +161,13 @@ export default function SettingsPage() {
 
   return (
     <AdminLayout>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Settings</h1>
-              <p className="text-gray-600 mt-2">Configure your gym settings and preferences</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Settings</h1>
+              <p className="text-xs sm:text-sm text-gray-600 mt-1 sm:mt-2">Configure your gym settings and preferences</p>
             </div>
             <button
               onClick={handleSave}

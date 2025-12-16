@@ -235,26 +235,26 @@ export default function Plans() {
 
   return (
     <AdminLayout>
-      <div className="max-w-7xl mx-auto">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center">
+        <div className="mb-6 sm:mb-8">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-4">
             <div>
-              <h1 className="text-3xl font-bold text-gray-900">Membership Plans</h1>
-              <p className="text-gray-600 mt-2">Manage pricing plans and features displayed on the website</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900">Membership Plans</h1>
+              <p className="text-xs sm:text-sm text-gray-600 mt-1 sm:mt-2">Manage pricing plans and features displayed on the website</p>
             </div>
             <button
               onClick={() => setShowAddModal(true)}
-              className="bg-primary hover:bg-primary-dark text-white px-4 py-2 rounded-lg font-medium flex items-center gap-2"
+              className="bg-primary hover:bg-primary-dark text-white px-3 sm:px-4 py-2 rounded-lg font-medium flex items-center gap-2 whitespace-nowrap text-sm"
             >
-              <Plus className="w-5 h-5" />
-              Add Plan
+              <Plus className="w-4 sm:w-5 h-4 sm:h-5" />
+              <span>Add Plan</span>
             </button>
           </div>
         </div>
 
         {/* Plans Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {plans.map((plan) => (
             <div key={plan._id} className={`bg-white rounded-lg shadow p-6 relative ${plan.popular ? 'ring-2 ring-primary' : ''}`}>
               {plan.popular && (

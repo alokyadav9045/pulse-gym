@@ -3,7 +3,7 @@
 import { motion } from 'framer-motion'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import { X } from 'lucide-react'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
 
 interface GalleryImage {
   _id: string
@@ -30,9 +30,9 @@ const categories = [
 export default function Gallery() {
   const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([])
   const [selectedCategory, setSelectedCategory] = useState('all')
-  const [selectedImage, setSelectedImage] = useState<GalleryImage | null>(null)
   const [loading, setLoading] = useState(true)
   const [failedImages, setFailedImages] = useState<Record<string, boolean>>({})
+  const [currentSlide, setCurrentSlide] = useState(0)
 
   const handleImageError = (id: string, src: string) => {
     console.error(`Image failed to load: ${src}`)
@@ -61,130 +61,136 @@ export default function Gallery() {
     ? galleryImages
     : galleryImages.filter(img => img.category === selectedCategory)
 
+  useEffect(() => {
+    setCurrentSlide(0)
+  }, [selectedCategory])
+
+  const handlePrevSlide = () => {
+    setCurrentSlide((prev) => (prev === 0 ? filteredImages.length - 1 : prev - 1))
+  }
+
+  const handleNextSlide = () => {
+    setCurrentSlide((prev) => (prev === filteredImages.length - 1 ? 0 : prev + 1))
+  }
+
   return (
-    <section id="gallery" className="py-20 bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="gallery" className="py-16 xs:py-20 sm:py-24 md:py-28 lg:py-32 bg-gray-50">
+      <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 md:px-8 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
+          className="text-center mb-10 sm:mb-12 md:mb-16">
+          <h2 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-3 sm:mb-4">
             Our <span className="text-primary">Gallery</span>
           </h2>
-          <div className="w-20 h-1 bg-primary rounded-full mx-auto mb-6"></div>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <div className="w-20 h-1 bg-primary rounded-full mx-auto mb-4 sm:mb-6"></div>
+          <p className="text-base sm:text-lg text-gray-600 max-w-2xl mx-auto">
             Take a virtual tour of our state-of-the-art facilities and see why members choose Vitalize Fitness.
           </p>
         </motion.div>
 
         {/* Category Filter */}
-        <div className="flex flex-wrap justify-center gap-4 mb-12">
+        <div className="flex flex-wrap justify-center gap-2 sm:gap-3 md:gap-4 mb-10 sm:mb-12 px-2">
           {categories.map((category) => (
             <button
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
-              className={`px-6 py-2 rounded-full font-semibold transition-colors ${
+              className={`px-4 sm:px-6 py-1.5 sm:py-2 rounded-full font-semibold text-xs sm:text-sm transition-colors ${
                 selectedCategory === category.id
                   ? 'bg-primary text-white'
                   : 'bg-white text-gray-700 hover:bg-primary hover:text-white'
-              }`}
-            >
+              }`}>
               {category.name}
             </button>
           ))}
         </div>
 
-        {/* Gallery Grid */}
+        {/* Gallery Carousel */}
         {loading ? (
-          <div className="flex justify-center items-center py-20">
+          <div className="flex justify-center items-center py-12 sm:py-20">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
           </div>
+        ) : filteredImages.length === 0 ? (
+          <div className="text-center py-12 sm:py-20">
+            <p className="text-gray-600 text-lg">No images available in this category.</p>
+          </div>
         ) : (
-          <motion.div
-            layout
-            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-          >
-            {filteredImages.map((image, index) => (
-              <motion.div
-                key={image._id}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                layout
-                className="relative group cursor-pointer overflow-hidden rounded-2xl shadow-lg hover:shadow-2xl transition-shadow duration-300 h-48 sm:h-56 md:h-64"
-                onClick={() => setSelectedImage(image)}
-              >
-                {failedImages[image._id] ? (
-                  // Fallback: use plain <img> tag to bypass Next image optimizer when it fails
-                  // This ensures images still display even if the optimizer returns 404 or fails
-                  // (e.g., remote host restrictions). Using a non-optimized tag as a last resort.
-                  <img
-                    src={image.image}
-                    alt={image.title}
-                    className="object-cover group-hover:scale-110 transition-transform duration-300 w-full h-full"
-                  />
-                ) : (
-                  <Image
-                    src={image.image}
-                    alt={image.title}
-                    fill
-                    sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
-                    onError={() => handleImageError(image._id, image.image)}
-                    className="object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                )}
-                <div className="absolute inset-0 bg-black/0 group-hover:bg-black/50 transition-colors duration-300 flex items-center justify-center">
-                  <div className="text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-center p-4">
-                    <p className="font-semibold">{image.title}</p>
-                    {image.description && (
-                      <p className="text-sm mt-2">{image.description}</p>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        )}
-
-        {/* Modal */}
-        {selectedImage && (
-          <div className="fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-            <div className="relative max-w-4xl max-h-full">
-              <button
-                onClick={() => setSelectedImage(null)}
-                className="absolute top-4 right-4 text-white hover:text-gray-300 transition-colors z-10"
-              >
-                <X className="w-8 h-8" />
-              </button>
-              <div className="bg-white rounded-lg p-6 max-w-md mx-4">
-                <h3 className="text-xl font-bold text-gray-900 mb-2">{selectedImage.title}</h3>
-                {selectedImage.description && (
-                  <p className="text-gray-600 mb-4">{selectedImage.description}</p>
-                )}
-                <p className="text-sm text-gray-500 capitalize">Category: {selectedImage.category}</p>
-              </div>
-              {failedImages[selectedImage._id] ? (
-                <img
-                  src={selectedImage.image}
-                  alt={selectedImage.title}
-                  className="max-w-full max-h-full object-contain rounded-lg mt-4"
+          <div className="relative">
+            <motion.div
+              key={currentSlide}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 0.5 }}
+              className="relative w-full h-64 xs:h-72 sm:h-96 md:h-[480px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl group">
+              {failedImages[filteredImages[currentSlide]._id] ? (
+                <Image
+                  src={filteredImages[currentSlide].image}
+                  alt={filteredImages[currentSlide].title}
+                  fill
+                  sizes="100vw"
+                  className="w-full h-full object-cover"
                 />
               ) : (
                 <Image
-                  src={selectedImage.image}
-                  alt={selectedImage.title}
-                  width={800}
-                  height={600}
-                  onError={() => handleImageError(selectedImage._id, selectedImage.image)}
-                  className="max-w-full max-h-full object-contain rounded-lg mt-4"
+                  src={filteredImages[currentSlide].image}
+                  alt={filteredImages[currentSlide].title}
+                  fill
+                  sizes="100vw"
+                  onError={() => handleImageError(filteredImages[currentSlide]._id, filteredImages[currentSlide].image)}
+                  className="object-cover"
+                  priority
                 />
               )}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+              
+              {/* Image Info */}
+              <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 text-white">
+                <h3 className="text-lg sm:text-2xl md:text-3xl font-bold mb-2">{filteredImages[currentSlide].title}</h3>
+                {filteredImages[currentSlide].description && (
+                  <p className="text-sm sm:text-base text-gray-200 mb-2">{filteredImages[currentSlide].description}</p>
+                )}
+                <p className="text-xs sm:text-sm text-gray-300 capitalize">Category: {filteredImages[currentSlide].category}</p>
+              </div>
+
+              {/* Navigation Arrows */}
+              <button
+                onClick={handlePrevSlide}
+                className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-900 rounded-full p-2 sm:p-3 transition-all duration-300 hover:scale-110">
+                <ChevronLeft className="w-5 sm:w-6 h-5 sm:h-6" />
+              </button>
+
+              <button
+                onClick={handleNextSlide}
+                className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-900 rounded-full p-2 sm:p-3 transition-all duration-300 hover:scale-110">
+                <ChevronRight className="w-5 sm:w-6 h-5 sm:h-6" />
+              </button>
+            </motion.div>
+
+            {/* Slide Indicators */}
+            <div className="flex justify-center items-center gap-2 mt-6 sm:mt-8">
+              {filteredImages.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentSlide(index)}
+                  className={`h-2 rounded-full transition-all duration-300 ${
+                    currentSlide === index
+                      ? 'bg-primary w-8'
+                      : 'bg-gray-300 hover:bg-gray-400 w-2'
+                  }`}
+                />
+              ))}
+            </div>
+
+            {/* Slide Counter */}
+            <div className="text-center mt-4 text-gray-600 text-sm sm:text-base">
+              {currentSlide + 1} / {filteredImages.length}
             </div>
           </div>
         )}
+
+        {/* Modal - Removed */}
       </div>
     </section>
   )
