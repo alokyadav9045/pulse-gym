@@ -34,7 +34,7 @@ async function extractAverageHex(imagePath) {
 
 async function main() {
   try {
-    const logoPath = path.join(__dirname, '..', 'public', 'Vitalize Fitness.png')
+    const logoPath = path.join(__dirname, '..', 'public', 'vitalize-fitness.png')
     const hex = await extractAverageHex(logoPath)
     console.log(hex)
   } catch (err) {

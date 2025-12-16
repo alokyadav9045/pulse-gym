@@ -56,7 +56,7 @@ export default function Navbar() {
         <div className="flex justify-between items-center h-16">
           <div className="flex-shrink-0">
             <Link href="/" className="flex items-center gap-3">
-              <Image src="/Vitalize Fitness.png" alt="Vitalize Fitness" width={36} height={36} className="logo" />
+              <Image src="/vitalize-fitness.png" alt="Vitalize Fitness" width={36} height={36} className="logo" />
             </Link>
           </div>
 
