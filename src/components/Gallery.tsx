@@ -65,6 +65,17 @@ export default function Gallery() {
     setCurrentSlide(0)
   }, [selectedCategory])
 
+  // Ensure currentSlide is within bounds when the filtered images list changes
+  useEffect(() => {
+    if (filteredImages.length === 0) {
+      setCurrentSlide(0)
+      return
+    }
+    setCurrentSlide(prev => (prev >= filteredImages.length ? 0 : prev))
+  }, [filteredImages.length])
+
+  const currentImage = filteredImages[currentSlide] || filteredImages[0]
+
   const handlePrevSlide = () => {
     setCurrentSlide((prev) => (prev === 0 ? filteredImages.length - 1 : prev - 1))
   }
@@ -124,45 +135,50 @@ export default function Gallery() {
               animate={{ opacity: 1 }}
               transition={{ duration: 0.5 }}
               className="relative w-full h-64 xs:h-72 sm:h-96 md:h-[480px] lg:h-[600px] rounded-3xl overflow-hidden shadow-2xl group">
-              {failedImages[filteredImages[currentSlide]._id] ? (
+              {failedImages[currentImage._id] ? (
+                // Show a local fallback if the optimization or fetch failed
                 <Image
-                  src={filteredImages[currentSlide].image}
-                  alt={filteredImages[currentSlide].title}
+                  src="/main.jpg"
+                  alt={currentImage.title}
                   fill
                   sizes="100vw"
                   className="w-full h-full object-cover"
+                  unoptimized
                 />
               ) : (
                 <Image
-                  src={filteredImages[currentSlide].image}
-                  alt={filteredImages[currentSlide].title}
+                  src={currentImage.image}
+                  alt={currentImage.title}
                   fill
                   sizes="100vw"
-                  onError={() => handleImageError(filteredImages[currentSlide]._id, filteredImages[currentSlide].image)}
+                  onError={() => handleImageError(currentImage._id, currentImage.image)}
                   className="object-cover"
                   priority
+                  unoptimized
                 />
-              )}
+              )} 
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
               
               {/* Image Info */}
               <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-6 text-white">
-                <h3 className="text-lg sm:text-2xl md:text-3xl font-bold mb-2">{filteredImages[currentSlide].title}</h3>
-                {filteredImages[currentSlide].description && (
-                  <p className="text-sm sm:text-base text-gray-200 mb-2">{filteredImages[currentSlide].description}</p>
+                <h3 className="text-lg sm:text-2xl md:text-3xl font-bold mb-2">{currentImage.title}</h3>
+                {currentImage.description && (
+                  <p className="text-sm sm:text-base text-gray-200 mb-2">{currentImage.description}</p>
                 )}
-                <p className="text-xs sm:text-sm text-gray-300 capitalize">Category: {filteredImages[currentSlide].category}</p>
+                <p className="text-xs sm:text-sm text-gray-300 capitalize">Category: {currentImage.category}</p>
               </div>
 
               {/* Navigation Arrows */}
               <button
                 onClick={handlePrevSlide}
+                aria-label="Previous slide"
                 className="absolute left-2 sm:left-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-900 rounded-full p-2 sm:p-3 transition-all duration-300 hover:scale-110">
                 <ChevronLeft className="w-5 sm:w-6 h-5 sm:h-6" />
               </button>
 
               <button
                 onClick={handleNextSlide}
+                aria-label="Next slide"
                 className="absolute right-2 sm:right-4 top-1/2 transform -translate-y-1/2 z-20 bg-white/80 hover:bg-white text-gray-900 rounded-full p-2 sm:p-3 transition-all duration-300 hover:scale-110">
                 <ChevronRight className="w-5 sm:w-6 h-5 sm:h-6" />
               </button>

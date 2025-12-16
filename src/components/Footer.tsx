@@ -1,9 +1,18 @@
+'use client'
+
 import Link from 'next/link'
 import Image from 'next/image'
 import { Facebook, Twitter, Instagram, Youtube } from 'lucide-react'
+import { useState } from 'react'
 
 export default function Footer() {
   const currentYear = new Date().getFullYear()
+  const [logoSrc, setLogoSrc] = useState<string>('/vitalize-fitness.png')
+
+  const handleLogoError = () => {
+    // Fallback to alternate logo or main image if optimization fails
+    setLogoSrc('/Vitalize Fitness.png')
+  }
 
   return (
     <footer className="bg-gray-900 text-white">
@@ -12,7 +21,7 @@ export default function Footer() {
           {/* Company Info */}
           <div className="space-y-4">
             <div className="flex items-center gap-2 sm:gap-3">
-              <Image src="/vitalize-fitness.png" alt="Vitalize Fitness" width={36} height={36} priority className="logo w-9 sm:w-11 h-9 sm:h-11" />
+              <Image src={logoSrc} onError={handleLogoError} unoptimized alt="Vitalize Fitness" width={36} height={36} priority className="logo w-9 sm:w-11 h-9 sm:h-11" />
               <h3 className="text-xl sm:text-2xl font-bold text-primary">Vitalize Fitness</h3>
             </div>
             <p className="text-gray-400 text-sm sm:text-base leading-relaxed">

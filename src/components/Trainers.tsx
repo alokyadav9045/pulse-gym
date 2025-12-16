@@ -3,6 +3,7 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { Facebook, Twitter, Instagram } from 'lucide-react'
+import { useState } from 'react'
 
 const trainers = [
   {
@@ -60,6 +61,12 @@ const trainers = [
 ]
 
 export default function Trainers() {
+  const [failedImages, setFailedImages] = useState<Record<number, boolean>>({})
+
+  const handleImageError = (id: number) => {
+    setFailedImages(prev => ({ ...prev, [id]: true }))
+  }
+
   return (
     <section id="trainers" className="py-16 xs:py-20 sm:py-24 md:py-28 lg:py-32 bg-white">
       <div className="max-w-7xl mx-auto px-3 xs:px-4 sm:px-6 md:px-8 lg:px-8">
@@ -90,10 +97,12 @@ export default function Trainers() {
             >
               <div className="relative overflow-hidden">
                 <Image
-                  src={trainer.image}
+                  src={failedImages[trainer.id] ? '/main.jpg' : trainer.image}
                   alt={trainer.name}
                   fill
                   className="object-cover group-hover:scale-110 transition-transform duration-300"
+                  unoptimized
+                  onError={() => handleImageError(trainer.id)}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                 <div className="absolute bottom-4 left-4 right-4 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-300">
