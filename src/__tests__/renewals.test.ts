@@ -7,7 +7,8 @@ jest.mock('@/lib/notifications', () => ({ __esModule: true, sendWhatsApp: jest.f
 
 describe('Renewal reminders', () => {
   it('sends reminders to members', async () => {
-    const { sendRenewalReminders } = require('../../scripts/renewalReminders.js')
+    const imported = await import('../../scripts/renewalReminders.js')
+    const { sendRenewalReminders } = imported as unknown as { sendRenewalReminders: (days: number) => Promise<{ sent: number }> }
     const res = await sendRenewalReminders(7)
     expect(res.sent).toBeGreaterThanOrEqual(0)
   })

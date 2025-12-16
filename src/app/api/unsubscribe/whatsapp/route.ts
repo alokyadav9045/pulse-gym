@@ -15,14 +15,21 @@ export async function GET(request: NextRequest) {
     const secret = process.env.JWT_SECRET
     if (!secret) return NextResponse.json({ success: false, message: 'Server not configured' }, { status: 500 })
 
-    let payload: any
+    let payload: unknown
     try {
+      // jwt.verify can return string or object; treat as unknown and validate below
       payload = jwt.verify(token, secret)
-    } catch (err) {
+    } catch {
       return NextResponse.json({ success: false, message: 'Invalid or expired token' }, { status: 400 })
     }
 
-    if (payload.memberId !== memberId || payload.action !== 'unsubscribe_whatsapp') {
+    // validate shape before using
+    if (typeof payload !== 'object' || payload === null) {
+      return NextResponse.json({ success: false, message: 'Invalid token payload' }, { status: 400 })
+    }
+
+    const p = payload as { memberId?: string; action?: string }
+    if (p.memberId !== memberId || p.action !== 'unsubscribe_whatsapp') {
       return NextResponse.json({ success: false, message: 'Invalid token payload' }, { status: 400 })
     }
 

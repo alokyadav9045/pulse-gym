@@ -109,7 +109,7 @@ export async function PUT(request: NextRequest) {
       )
     }
 
-    const updatePayload: any = {
+    const updatePayload: Record<string, unknown> = {
       title,
       description,
       category,

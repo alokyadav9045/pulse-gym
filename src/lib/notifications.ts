@@ -1,23 +1,25 @@
 import type { Twilio } from 'twilio'
+import jwt from 'jsonwebtoken'
 
 let client: Twilio | null = null
 
-function getClient() {
+async function getClient() {
   if (client) return client
   const sid = process.env.TWILIO_ACCOUNT_SID
   const token = process.env.TWILIO_AUTH_TOKEN
 
   if (!sid || !token) return null
 
-  // Lazy import to avoid requiring Twilio in environments without creds
-  // eslint-disable-next-line @typescript-eslint/no-var-requires
-  const twilio = require('twilio') as typeof import('twilio')
+  // Dynamic import avoids requiring Twilio in environments without creds
+  const twilioModule = await import('twilio')
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const twilio = (twilioModule as any).default ?? twilioModule
   client = twilio(sid, token)
   return client
 }
 
 export async function sendWhatsApp(to: string, body: string) {
-  const c = getClient()
+  const c = await getClient()
   const from = process.env.TWILIO_WHATSAPP_FROM
 
   if (!c || !from) {
@@ -37,7 +39,7 @@ export async function sendWhatsApp(to: string, body: string) {
 }
 
 export async function sendSMS(to: string, body: string) {
-  const c = getClient()
+  const c = await getClient()
   const from = process.env.TWILIO_PHONE_NUMBER
 
   if (!c || !from) {
@@ -53,7 +55,6 @@ export async function sendSMS(to: string, body: string) {
 }
 
 export function createUnsubscribeToken(memberId: string) {
-  const jwt = require('jsonwebtoken')
   const secret = process.env.JWT_SECRET
   if (!secret) return null
   return jwt.sign({ memberId, action: 'unsubscribe_whatsapp' }, secret, { expiresIn: '30d' })

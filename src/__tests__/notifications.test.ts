@@ -1,5 +1,3 @@
-import { jest } from '@jest/globals'
-
 describe('Notifications', () => {
   it('should return gracefully when Twilio not configured', async () => {
     const notifications = await import('@/lib/notifications')
